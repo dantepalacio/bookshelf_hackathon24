@@ -18,7 +18,6 @@ gunicorn = "^23.0.0"
 
 [tool.poetry.scripts]
 database = "app.models:main"
-build = "app.utils.builder:build"
 
 [build-system]
 requires = ["poetry-core"]

@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from pathlib import Path
 
+
 load_dotenv()
 
 app = Flask(__name__, root_path=str(Path(__file__).parent.parent))
@@ -18,9 +19,12 @@ login_manager.login_view = "/login"
 login_manager.init_app(app)
 
 
+from app.models import User
+
+
 @login_manager.user_loader
 def load_user(user_id):
-    return user_id
+    return User.query.get(int(user_id))
 
 
 @app.route("/")
