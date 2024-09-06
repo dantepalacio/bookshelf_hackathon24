@@ -5,7 +5,9 @@ from googlesearch import search
 def google_search(query):
     briefly_query = query + ' читать краткий пересказ брифли'
     response = search(briefly_query, tld='co.in',num=10, stop=10, pause=2)
-    print(list(response)[0])
+    result = list(response)[0]
+    
+    return result
 
 
 def split_text_overlap(text, max_fragment_length, overlap_length):
