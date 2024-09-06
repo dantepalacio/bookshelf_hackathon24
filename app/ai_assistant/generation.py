@@ -3,7 +3,7 @@ import os, sys
 import openai
 
 from dotenv import load_dotenv
-from app.ai_assistent.prompts import BATCH_PERSONAL_SUMMARY_PROMPT, OVERALL_PERSONAL_SUMMARY_PROMPT
+from app.ai_assistant.prompts import BATCH_PERSONAL_SUMMARY_PROMPT, OVERALL_PERSONAL_SUMMARY_PROMPT
 
 load_dotenv()
 
@@ -37,3 +37,4 @@ def generate_overall_summary(text,person):
 
     answer = response.choices[0].message.content
     return answer
+
