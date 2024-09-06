@@ -18,9 +18,10 @@ def parse_book(url):
         
         all_text = "\n".join([p.get_text() for p in paragraphs])
 
-        print(all_text)
+        # print(all_text)
 
         save_to_file(all_text, 'p_result.txt')
+        return all_text
 
     else:
         print(f"jopa: {response.status_code}")
