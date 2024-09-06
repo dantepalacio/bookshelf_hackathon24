@@ -3,7 +3,7 @@ import os, sys
 import openai
 
 from dotenv import load_dotenv
-from app.ai_assistant.prompts import BATCH_PERSONAL_SUMMARY_PROMPT, OVERALL_PERSONAL_SUMMARY_PROMPT
+from app.parser.prompts import BATCH_PERSONAL_SUMMARY_PROMPT, OVERALL_PERSONAL_SUMMARY_PROMPT
 
 load_dotenv()
 
