@@ -3,7 +3,7 @@ from app.models import Book, GenreBook
 
 
 def get_most_popular_books() -> list[Book]:
-    books_trending = Book.query.order_by(Book.views).limit(10).all()
+    books_trending = Book.query.order_by(Book.views.desc()).limit(10).all()
     return books_trending
 
 
