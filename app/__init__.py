@@ -19,8 +19,9 @@ login_manager.login_view = "/login"  # type: ignore
 login_manager.init_app(app)
 
 
-from app.controllers import get_most_popular_books
+from app.controllers import get_most_popular_books, get_book_by_genres
 from app.models import User
+from app.constants.genres import CLASSICAL_GENRE
 
 
 @login_manager.user_loader
@@ -28,10 +29,16 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
+from app.components import Bookshelf
+
+
 @app.route("/")
 def index():
-    books = get_most_popular_books()
-    return render_template("pages/index.j2", books=books)
+    sections = [
+        Bookshelf(books=get_most_popular_books(), title="Самые популярные книги"),
+        Bookshelf(books=get_book_by_genres(CLASSICAL_GENRE), title="Вечная классика"),
+    ]
+    return render_template("pages/index.j2", sections=sections)
 
 
 from .routes import register_routes
