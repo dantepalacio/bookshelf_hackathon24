@@ -21,6 +21,8 @@ openai = "^1.44.0"
 langchain = "^0.2.16"
 langchain-openai = "^0.1.23"
 langchain-community = "^0.2.16"
+rank-bm25 = "^0.2.2"
+faiss-cpu = "^1.8.0.post1"
 
 
 [tool.poetry.scripts]
