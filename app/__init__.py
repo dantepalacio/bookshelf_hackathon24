@@ -9,6 +9,7 @@ from pathlib import Path
 from .routes import register_routes
 
 load_dotenv()
+print(os.getenv("DATABASE_URI"))
 
 app = Flask(__name__, root_path=str(Path(__file__).parent.parent))
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
