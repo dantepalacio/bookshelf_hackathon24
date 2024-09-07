@@ -36,7 +36,9 @@ class Book(db.Model):
     name: Mapped[str] = mapped_column(String(255))
     rating: Mapped[float]
     year: Mapped[int]
-    book_cover: Mapped[str]
+    book_cover: Mapped[str] # URL
+    publisher: Mapped[str]
+    author: Mapped[str]
 
 
 class AuthorBook(db.Model):

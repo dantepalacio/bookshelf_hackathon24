@@ -6,14 +6,12 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from pathlib import Path
 
-from .routes import register_routes
-from .template import main
 
 load_dotenv()
-print(os.getenv("DATABASE_URI"))
+print(os.getenv("DATABASE_URII"))
 
 app = Flask(__name__, root_path=str(Path(__file__).parent.parent))
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URII")
 app.secret_key = os.getenv("SECRET_KEY", "").encode()
 db = SQLAlchemy(app)
 
@@ -34,6 +32,8 @@ def load_user(user_id):
 def index():
     return render_template("pages/index.j2")
 
+from .routes import register_routes
+from .template import main
 
 register_routes(app)
 main(app)
