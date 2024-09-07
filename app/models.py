@@ -40,6 +40,7 @@ class Book(db.Model):
     publisher: Mapped[str]
     author: Mapped[str]
     views: Mapped[int] = mapped_column(default=0)
+    description: Mapped[str]
 
 class Genre(db.Model):
     __tablename__ = "genre"
