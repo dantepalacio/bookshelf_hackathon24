@@ -21,8 +21,8 @@ def index():
             year=year,  # type: ignore
             book_cover=book_cover,  # type: ignore
             publisher=publisher,  # type: ignore
-            author=author,
-        )  # type: ignore
+            author=author,# type: ignore
+        )  
 
         db.session.add(book)
         db.session.commit()
