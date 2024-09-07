@@ -11,4 +11,50 @@
             <circle cx="12" cy="17.5" r="1.5" />
         </g>
     </symbol>
+    <symbol id="book" fill="none" viewBox="0 0 100 100">
+        <path fill="currentColor" d="M17 83V21c0-7 6-13 13-13h53v67H30c-10 0-13 1-13 8Z" />
+        <path stroke="currentColor" stroke-linejoin="round" stroke-width="6.3"
+            d="M17 21c0-7 6-13 13-13h53v67H30c-10 0-13 1-13 8V21Z" />
+        <path fill="none" d="M25 92h58V75H25a8 8 0 1 0 0 17Z" />
+        <path stroke="currentColor" stroke-linejoin="round" stroke-width="6.3"
+            d="M83 92V75H25a8 8 0 1 0 0 17h58Z" />
+    </symbol>
+    <symbol id="game" viewBox="0 0 100 100" fill="none">
+
+        <path id="path" d="M91.66 58.33L58.33 58.33L58.33 91.66L91.66 91.66L91.66 58.33Z"
+            fill="#0191FF" fill-opacity="1.000000" fill-rule="nonzero" />
+        <path id="path" d="M58.33 58.33L58.33 91.66L91.66 91.66L91.66 58.33L58.33 58.33Z"
+            stroke="#0191FF" stroke-opacity="1.000000" stroke-width="6.250000"
+            stroke-linejoin="round" />
+        <path id="path" d="M27.08 8.33L45.83 41.66L8.33 41.66L27.08 8.33Z" fill="#E02020"
+            fill-opacity="1.000000" fill-rule="nonzero" />
+        <path id="path" d="M45.83 41.66L8.33 41.66L27.08 8.33L45.83 41.66Z" stroke="#E02020"
+            stroke-opacity="1.000000" stroke-width="6.250000" stroke-linejoin="round" />
+        <path id="path"
+            d="M75 41.66C84.2 41.66 91.66 34.2 91.66 24.99C91.66 15.79 84.2 8.33 75 8.33C65.79 8.33 58.33 15.79 58.33 24.99C58.33 34.2 65.79 41.66 75 41.66Z"
+            fill="#6DD401" fill-opacity="1.000000" fill-rule="nonzero" />
+        <path id="path"
+            d="M91.66 24.99C91.66 15.79 84.2 8.33 75 8.33C65.79 8.33 58.33 15.79 58.33 24.99C58.33 34.2 65.79 41.66 75 41.66C84.2 41.66 91.66 34.2 91.66 24.99Z"
+            stroke="#6DD401" stroke-opacity="1.000000" stroke-width="6.250000"
+            stroke-linejoin="round" />
+        <path id="path"
+            d="M6.15 60.54L6.12 60.54C4.88 59.3 4.88 57.36 6.12 56.12C7.36 54.88 9.3 54.88 10.54 56.12L10.54 56.15L6.15 60.54ZM43.84 89.45L43.87 89.45C45.11 90.69 45.11 92.63 43.87 93.87C42.63 95.11 40.69 95.11 39.45 93.87L39.45 93.84L43.84 89.45Z"
+            fill="#000000" fill-opacity="0" fill-rule="nonzero" />
+        <path id="path" d="M8.33 58.33L41.66 91.66" stroke="#F7B501" stroke-opacity="1.000000"
+            stroke-width="6.250000" stroke-linejoin="round" stroke-linecap="round" />
+        <path id="path"
+            d="M10.54 93.84L10.54 93.87C9.3 95.11 7.36 95.11 6.12 93.87C4.88 92.63 4.88 90.69 6.12 89.45L6.15 89.45L10.54 93.84ZM39.45 56.15L39.45 56.12C40.69 54.88 42.63 54.88 43.87 56.12C45.11 57.36 45.11 59.3 43.87 60.54L43.84 60.54L39.45 56.15Z"
+            fill="#000000" fill-opacity="0" fill-rule="nonzero" />
+        <path id="path" d="M8.33 91.66L41.66 58.33" stroke="#F7B501" stroke-opacity="1.000000"
+            stroke-width="6.250000" stroke-linejoin="round" stroke-linecap="round" />
+
+    </symbol>
+
+    <symbol id="flask" fill="none" viewBox="0 0 100 100">
+        <path fill="#B620E0"
+            d="M16 91c-3-2-5-6-3-9l9-19s16 10 28 0c13-11 28 0 28 0l9 19 1 3c0 4-3 7-7 7H19l-3-1Z" />
+        <path stroke="#32C5FF" stroke-linejoin="round" stroke-width="6.3"
+            d="M38 31V8h25v23l15 32 9 19 1 3c0 4-3 7-7 7H19a7 7 0 0 1-6-10l9-19 16-32Z" />
+    </symbol>
+
 </svg>
