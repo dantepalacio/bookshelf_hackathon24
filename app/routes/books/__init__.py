@@ -1,6 +1,6 @@
 from app import db
 from app.models import Book
-from flask import Blueprint, abort, render_template, request
+from flask import Blueprint, abort, render_template
 
 books = Blueprint("books", __name__)
 
