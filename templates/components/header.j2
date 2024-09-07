@@ -2,4 +2,22 @@
     <a href="{{ url_for('index') }}" class="header__logo">
         КарОУНБ
     </a>
+
+    {% include "components/search.j2" %}
 </header>
+
+<style>
+    header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+        padding: 20px 100px;
+    }
+
+    header .search {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+</style>
