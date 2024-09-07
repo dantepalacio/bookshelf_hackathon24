@@ -7,6 +7,7 @@ from flask_login import LoginManager
 from pathlib import Path
 
 from .routes import register_routes
+from .template import main
 
 load_dotenv()
 print(os.getenv("DATABASE_URI"))
@@ -35,3 +36,4 @@ def index():
 
 
 register_routes(app)
+main(app)
