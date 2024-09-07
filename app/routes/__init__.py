@@ -9,4 +9,3 @@ def register_routes(app: Flask):
     app.register_blueprint(books, url_prefix="/books")
     app.register_blueprint(chat_bp, url_prefix='/chat')
     app.register_blueprint(auth_bp)
-    
