@@ -1,11 +1,18 @@
 {% from "components/icon.j2" import Icon %}
 
+{% macro BookLink(url) %}
+<a href="{{ url }}" class="book__link">{{ caller() }}</a>
+{% endmacro %}
+
 {% macro Book(book) %}
+{% set url = "/book" %}
 <div class="book">
+    {% call BookLink(url) %}
     <img src="" alt="Обложка" class="book__image">
+    {% endcall %}
     <div class="book__meta">
         <div class="book__head">
-            <h3 class="book__name">Компот в стране чудесных чудес</h3>
+            {% call BookLink(url) %}<h3 class="book__name">Компот в стране чудесных чудес</h3>{% endcall %}
             <button class="book__actions">{{ Icon("more") }}</button>
         </div>
         <p class="book__authors">А. Василевский, Б. Гегелевский</p>
@@ -26,6 +33,12 @@
         gap: 4px
     }
 
+    .book__link {
+        display: block;
+        color: inherit;
+        text-decoration: none;
+    }
+
     .book__head {
         display: flex;
         justify-content: space-between;
@@ -38,10 +51,19 @@
         border: none;
         display: block;
         margin: 0;
-        padding: 0;
+        margin-right: -0.2em;
+        margin-top: -0.2em;
+        padding: .2em;
         color: #808080;
         font-size: 24px;
         cursor: pointer;
+        line-height: 1;
+        border-radius: 50%;
+        transition: .2s all;
+    }
+
+    .book__actions:hover {
+        background-color: #eee;
     }
 
     .book__image {
