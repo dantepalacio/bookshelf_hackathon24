@@ -11,7 +11,7 @@ load_dotenv()
 print(os.getenv("DATABASE_URII"))
 
 app = Flask(__name__, root_path=str(Path(__file__).parent.parent))
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URII")
+app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
 app.secret_key = os.getenv("SECRET_KEY", "").encode()
 db = SQLAlchemy(app)
 
