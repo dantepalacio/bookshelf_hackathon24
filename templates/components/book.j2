@@ -4,9 +4,9 @@
 <a href="{{ url }}" class="book__link">{{ caller() }}</a>
 {% endmacro %}
 
-{% macro Book(book) %}
+{% macro Book(book, class="") %}
 {% set url = "/book" %}
-<div class="book">
+<div class="book {{ class }}">
     {% call BookLink(url) %}
     <img src="" alt="Обложка" class="book__image">
     {% endcall %}
@@ -24,7 +24,8 @@
 
 <style>
     .book {
-        width: 210px;
+        --width: 210px;
+        width: var(--width);
     }
 
     .book__meta {
@@ -74,6 +75,12 @@
         border-radius: 8px;
         border: none;
         padding: 1em;
+        transition: all .2s;
+    }
+
+    .book:has(.book__link:hover) .book__image,
+    .book__image:hover {
+        transform: scale(1.05);
     }
 
     .book__name {
