@@ -6,6 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 from pathlib import Path
 
+from .routes import register_routes
 
 load_dotenv()
 
@@ -30,3 +31,6 @@ def load_user(user_id):
 @app.route("/")
 def index():
     return render_template("pages/index.j2")
+
+
+register_routes(app)
