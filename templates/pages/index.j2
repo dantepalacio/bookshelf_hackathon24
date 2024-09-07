@@ -1,0 +1,34 @@
+{% from "components/book.j2" import Book %}
+
+{% extends "layouts/empty.j2" %}
+
+{% block content %}
+{% include "components/header.j2" %}
+
+<section class="hero">
+    <h1 class="hero__title">Карагандинская областная универсальная научная библиотека имени Н. В. Гоголя</h1>
+</section>
+
+<section>
+    <h2>Вам понравятся</h2>
+    {{ Book(none) }}
+</section>
+
+<style>
+    .hero {
+        display: grid;
+        gap: 50px;
+        padding-block: 80px;
+    }
+
+    .hero__title {
+        font-size: 48px;
+        font-weight: 700;
+        line-height: 58px;
+        text-align: center;
+        max-width: 840px;
+        margin: 0 auto;
+        text-wrap: balance;
+    }
+</style>
+{% endblock content %}

@@ -29,5 +29,4 @@ def load_user(user_id):
 
 @app.route("/")
 def index():
-    print(app.template_folder)
-    return render_template("index.j2")
+    return render_template("pages/index.j2")
