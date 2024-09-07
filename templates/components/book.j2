@@ -1,0 +1,113 @@
+{% from "components/icon.j2" import Icon %}
+
+{% macro BookLink(url) %}
+<a href="{{ url }}" class="book__link">{{ caller() }}</a>
+{% endmacro %}
+
+{% macro Book(book, class="") %}
+{% set url = "/book" %}
+<div class="book {{ class }}">
+    {% call BookLink(url) %}
+    <img src="" alt="Обложка" class="book__image">
+    {% endcall %}
+    <div class="book__meta">
+        <div class="book__head">
+            {% call BookLink(url) %}<h3 class="book__name">Компот в стране чудесных чудес</h3>{% endcall %}
+            <button class="book__actions">{{ Icon("more") }}</button>
+        </div>
+        <p class="book__authors">А. Василевский, Б. Гегелевский</p>
+        <div class="book__rating">
+            {{ Icon("star", class="rating__icon") }} 3,1
+        </div>
+    </div>
+</div>
+
+<style>
+    .book {
+        --width: 210px;
+        width: var(--width);
+    }
+
+    .book__meta {
+        display: grid;
+        padding: 8px 4px;
+        gap: 4px
+    }
+
+    .book__link {
+        display: block;
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .book__head {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+    }
+
+    .book__actions {
+        background-color: transparent;
+        font: inherit;
+        border: none;
+        display: block;
+        margin: 0;
+        margin-right: -0.2em;
+        margin-top: -0.2em;
+        padding: .2em;
+        color: #808080;
+        font-size: 24px;
+        cursor: pointer;
+        line-height: 1;
+        border-radius: 50%;
+        transition: .2s all;
+    }
+
+    .book__actions:hover {
+        background-color: #eee;
+    }
+
+    .book__image {
+        display: block;
+        width: 100%;
+        aspect-ratio: 3 / 4;
+        background-color: #ccc;
+        border-radius: 8px;
+        border: none;
+        padding: 1em;
+        transition: all .2s;
+    }
+
+    .book:has(.book__link:hover) .book__image,
+    .book__image:hover {
+        transform: scale(1.05);
+    }
+
+    .book__name {
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 19px;
+        margin: 0;
+    }
+
+    .book__authors {
+        margin: 0;
+        color: #575656;
+        font-size: 14px;
+        white-space: nowrap;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .book__rating {
+        display: flex;
+        align-items: center;
+        gap: 5px
+    }
+
+    .rating__icon {
+        color: #FFC100
+    }
+</style>
+{% endmacro %}
