@@ -24,14 +24,16 @@
     </div>
 </section>
 
+{% for section in sections %}
 <section class="section bookshelf">
-    <h2 class="section__title">Популярные книги</h2>
+    <h2 class="section__title">{{ section.title }}</h2>
     <div class="bookshelf__list">
-        {% for book in books %}
+        {% for book in section.books %}
         {{ Book(book, class="bookshelf__book") }}
         {% endfor %}
     </div>
 </section>
+{% endfor %}
 
 <style>
     .hero {
@@ -64,6 +66,10 @@
         margin-bottom: 8px;
     }
 
+    .bookshelf {
+        padding-top: 50px;
+    }
+
     .bookshelf__list {
         display: flex;
         gap: 40px;
@@ -71,7 +77,7 @@
         overflow: auto;
         padding-inline: 100px;
         padding-block: 20px;
-        scrollbar-width: thin;
+        scrollbar-width: none;
         scroll-snap-type: x mandatory;
         scroll-snap-stop: always;
     }
