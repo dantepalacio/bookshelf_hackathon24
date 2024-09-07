@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.0/socket.io.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #chat_container { display: flex; }
+        #user_list { width: 30%; border-right: 1px solid #ccc; padding: 10px; }
+        #chat_box { width: 70%; padding: 10px; }
+        #messages { border: 1px solid #ccc; height: 400px; overflow-y: scroll; padding: 10px; }
+        #input_container { margin-top: 10px; }
+        #input_container input { width: 80%; padding: 10px; }
+        #input_container button { padding: 10px 20px; }
+        .message { margin-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <h1>Chat</h1>
+
+    <div id="chat_container">
+        <!-- Список пользователей -->
+        <div id="user_list">
+            <h3>Users</h3>
+            <ul id="users">
+                {% for user in users %}
+                <li class="user" data-userid="{{ user.id }}">{{ user.first_name }} {{ user.last_name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Чат -->
+        <div id="chat_box">
+            <h3>Chat with <span id="chat_with">[Select a user]</span></h3>
+            <div id="messages"></div>
+
+            <!-- Поле ввода сообщений -->
+            <div id="input_container">
+                <input type="text" id="message" placeholder="Enter message" disabled>
+                <button id="send_button" disabled>Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const socket = io.connect('http://' + document.domain + ':' + location.port);  // Убедимся, что WebSocket подключен
+            let currentChatUserId = null;  // ID текущего пользователя для чата
+
+            // Функция для отображения сообщений
+            function displayMessage(sender, message) {
+                const messagesDiv = document.getElementById('messages');
+                const messageElement = document.createElement('div');
+                messageElement.classList.add('message');
+                messageElement.textContent = `${sender}: ${message}`;
+                messagesDiv.appendChild(messageElement);
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            }
+
+            // Обработчик выбора пользователя из списка
+            document.querySelectorAll('.user').forEach(user => {
+                user.addEventListener('click', function() {
+                    currentChatUserId = this.dataset.userid;
+                    document.getElementById('chat_with').textContent = this.textContent;
+
+                    // Включаем поле ввода сообщения и кнопку отправки
+                    document.getElementById('message').disabled = false;
+                    document.getElementById('send_button').disabled = false;
+
+                    // Присоединение к комнате для чата
+                    socket.emit('join', { recipient_id: currentChatUserId });
+
+                    // Загрузка истории переписки с выбранным пользователем
+                    loadChatHistory(currentChatUserId);
+                });
+            });
+
+            // Функция загрузки истории переписки
+            function loadChatHistory(userId) {
+                fetch(`/api/chat/history/${userId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const messagesDiv = document.getElementById('messages');
+                        messagesDiv.innerHTML = '';  // Очищаем чат
+                        data.forEach(msg => {
+                            displayMessage(msg.sender_id == userId ? 'They' : 'You', msg.content);
+                        });
+                    });
+            }
+
+            // Отправка сообщения
+            function sendMessage() {
+                const message = document.getElementById('message').value;
+                if (message.trim() === '') return;  // Не отправляем пустые сообщения
+                socket.emit('send_message', { recipient_id: currentChatUserId, message: message });
+                displayMessage('You', message);  // Показать отправленное сообщение в чате
+                document.getElementById('message').value = '';  // Очищаем поле ввода
+            }
+
+            // Обработка отправки сообщения по кнопке
+            document.getElementById('send_button').addEventListener('click', sendMessage);
+
+            // Обработка отправки по нажатию Enter
+            document.getElementById('message').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // Получение сообщения от сервера
+            socket.on('receive_message', function(data) {
+                if (currentChatUserId === data.sender || currentChatUserId === data.recipient) {
+                    displayMessage(data.sender == currentChatUserId ? 'They' : 'You', data.message);
+                }
+            });
+        });
+    </script>
+</body>
+</html>
