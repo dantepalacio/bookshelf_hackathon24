@@ -4,6 +4,7 @@ from flask_login import UserMixin
 from sqlalchemy import ForeignKey, Integer, String, DateTime, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app import db, app
+from datetime import datetime
 
 UserRole = Literal["user", "librarian", "moderator", "admin"]
 
@@ -17,8 +18,12 @@ class User(db.Model, UserMixin):
     first_name: Mapped[str] = mapped_column(String(255))
     last_name: Mapped[str] = mapped_column(String(255))
     role: Mapped[UserRole] = mapped_column(String(255))
-    address: Mapped[UserRole] = mapped_column(String(255))
+    address: Mapped[str] = mapped_column(String(255))
     birthday: Mapped[date]
+
+    sent_messages = relationship('Message', back_populates='sender', foreign_keys='Message.sender_id')
+    received_messages = relationship('Message', back_populates='recipient', foreign_keys='Message.recipient_id')
+
 
 
 class Author(db.Model):
@@ -139,6 +144,22 @@ class Review(db.Model):
     user_id: Mapped[int] = mapped_column(Integer, ForeignKey(User.id))
     created_at: Mapped[DateTime] = mapped_column(DateTime, default=func.now())
     book_id: Mapped[int] = mapped_column(Integer, ForeignKey(Book.id))
+
+class Message(db.Model):
+    __tablename__ = "messages"
+    id: Mapped[int] = mapped_column(primary_key=True)
+    
+    sender_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
+    recipient_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
+
+    content: Mapped[str] = mapped_column(String(500))
+    
+    timestamp: Mapped[datetime] = mapped_column(default=datetime.utcnow)
+    
+    is_read: Mapped[bool] = mapped_column(default=False)
+
+    sender = relationship('User', foreign_keys=[sender_id], back_populates='sent_messages')
+    recipient = relationship('User', foreign_keys=[recipient_id], back_populates='received_messages')
 
 
 def main():
