@@ -1,0 +1,12 @@
+{% from "components/book.j2" import Book %}
+{% from "components/icon.j2" import Icon %}
+
+{% extends "layouts/empty.j2" %}
+
+{% block content %}
+{% include "components/header.j2" %}
+
+<h1 class="book__name">{{ book.name }}</h1>
+<p>{{ book.views }}</p>
+
+{% endblock content %}

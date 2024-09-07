@@ -8,7 +8,6 @@ from pathlib import Path
 
 
 load_dotenv()
-print(os.getenv("DATABASE_URII"))
 
 app = Flask(__name__, root_path=str(Path(__file__).parent.parent))
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
@@ -16,10 +15,11 @@ app.secret_key = os.getenv("SECRET_KEY", "").encode()
 db = SQLAlchemy(app)
 
 login_manager = LoginManager()
-login_manager.login_view = "/login"# type: ignore
+login_manager.login_view = "/login"  # type: ignore
 login_manager.init_app(app)
 
 
+from app.controllers import get_most_popular_books
 from app.models import User
 
 
@@ -30,7 +30,9 @@ def load_user(user_id):
 
 @app.route("/")
 def index():
-    return render_template("pages/index.j2")
+    books = get_most_popular_books()
+    return render_template("pages/index.j2", books=books)
+
 
 from .routes import register_routes
 from .template import main

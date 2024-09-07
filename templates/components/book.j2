@@ -5,19 +5,19 @@
 {% endmacro %}
 
 {% macro Book(book, class="") %}
-{% set url = "/book" %}
+{% set url = url_for("books.item", id=book.id) %}
 <div class="book {{ class }}">
     {% call BookLink(url) %}
-    <img src="" alt="Обложка" class="book__image">
+    <img src="{{ book.book_cover }}" alt="Обложка" class="book__image">
     {% endcall %}
     <div class="book__meta">
         <div class="book__head">
-            {% call BookLink(url) %}<h3 class="book__name">Компот в стране чудесных чудес</h3>{% endcall %}
+            {% call BookLink(url) %}<h3 class="book__name">{{ book.name }}</h3>{% endcall %}
             <button class="book__actions">{{ Icon("more") }}</button>
         </div>
-        <p class="book__authors">А. Василевский, Б. Гегелевский</p>
+        <p class="book__authors">{{ book.author }}</p>
         <div class="book__rating">
-            {{ Icon("star", class="rating__icon") }} 3,1
+            {{ Icon("star", class="rating__icon") }} {{ book.rating }}
         </div>
     </div>
 </div>
@@ -74,8 +74,8 @@
         background-color: #ccc;
         border-radius: 8px;
         border: none;
-        padding: 1em;
         transition: all .2s;
+        object-fit: cover;
     }
 
     .book:has(.book__link:hover) .book__image,

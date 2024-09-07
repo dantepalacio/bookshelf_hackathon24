@@ -25,10 +25,10 @@
 </section>
 
 <section class="section bookshelf">
-    <h2 class="section__title">Вам понравятся</h2>
+    <h2 class="section__title">Популярные книги</h2>
     <div class="bookshelf__list">
-        {% for i in range(10) %}
-        {{ Book(none, class="bookshelf__book") }}
+        {% for book in books %}
+        {{ Book(book, class="bookshelf__book") }}
         {% endfor %}
     </div>
 </section>
