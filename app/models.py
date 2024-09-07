@@ -105,18 +105,40 @@ class Status(db.Model):
     __tablename__ = "status"
     __table_args__ = {"extend_existing": True}
     id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str]
+    name: Mapped[str] = mapped_column(String(255))
+
+
+class Post(db.Model):
+    __tablename__ = "post"
+    __table_args__ = {"extend_existing": True}
+    id: Mapped[int] = mapped_column(primary_key=True)
+    text: Mapped[str] = mapped_column(String, nullable=True)
+    image: Mapped[str] = mapped_column(String, nullable=True) # url
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey(User.id)) # author
+    created_at: Mapped[DateTime] = mapped_column(DateTime, default=func.now())
+    likes: Mapped[int] = mapped_column(Integer, default=0)
 
 
 class Comment(db.Model):
     __tablename__ = "comment"
     __table_args__ = {"extend_existing": True}
     id: Mapped[int] = mapped_column(primary_key=True)
-    text: Mapped[str]
+    text: Mapped[str] = mapped_column(String(600))
     status: Mapped[int] = mapped_column(Integer, ForeignKey(Status.id), default=0)
-    for_book: Mapped[bool] = mapped_column(default=False) #False - for posts, True - for books
-    user_id: Mapped[int] = mapped_column(Integer, ForeignKey(User.id), primary_key=True)
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey(User.id))
     created_at: Mapped[DateTime] = mapped_column(DateTime, default=func.now())
+    post_id: Mapped[int] = mapped_column(Integer, ForeignKey(Post.id))
+
+
+class Review(db.Model):
+    __tablename__ = "review"
+    __table_args__ = {"extend_existing": True}
+    id: Mapped[int] = mapped_column(primary_key=True)
+    text: Mapped[str] = mapped_column(String(6000))
+    status: Mapped[int] = mapped_column(Integer, ForeignKey(Status.id), default=0)
+    user_id: Mapped[int] = mapped_column(Integer, ForeignKey(User.id))
+    created_at: Mapped[DateTime] = mapped_column(DateTime, default=func.now())
+    book_id: Mapped[int] = mapped_column(Integer, ForeignKey(Book.id))
 
 
 def main():
