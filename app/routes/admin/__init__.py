@@ -16,20 +16,12 @@ def index():
         publisher = request.form.get('publisher')
         book_cover = request.form.get('book_cover')
 
-        response = {
-            "book_title":book_title,
-            "author":author,
-            "year":year,
-            "publisher":publisher,
-            "book_cover":book_cover,
-        }
-
-        book = Book(name=book_title,
-                    rating=0.0,
-                    year=year,
-                    book_cover=book_cover,
-                    publisher=publisher,
-                    author=author)
+        book = Book(name=book_title,# type: ignore
+                    rating=0.0, # type: ignore
+                    year=year,# type: ignore
+                    book_cover=book_cover,# type: ignore
+                    publisher=publisher,# type: ignore
+                    author=author)# type: ignore
         
         db.session.add(book)
         db.session.commit()

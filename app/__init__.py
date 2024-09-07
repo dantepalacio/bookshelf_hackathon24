@@ -16,7 +16,7 @@ app.secret_key = os.getenv("SECRET_KEY", "").encode()
 db = SQLAlchemy(app)
 
 login_manager = LoginManager()
-login_manager.login_view = "/login"
+login_manager.login_view = "/login"# type: ignore
 login_manager.init_app(app)
 
 
