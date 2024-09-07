@@ -2,7 +2,7 @@ from datetime import date
 from typing import Literal
 from flask_login import UserMixin
 from sqlalchemy import ForeignKey, Integer, String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app import db, app
 
 UserRole = Literal["user", "librarian", "moderator", "admin"]
@@ -39,7 +39,23 @@ class Book(db.Model):
     book_cover: Mapped[str] # URL
     publisher: Mapped[str]
     author: Mapped[str]
+    views: Mapped[int] = mapped_column(default=0)
 
+class Genre(db.Model):
+    __tablename__ = "genre"
+    __table_args__ = {"extend_existing": True}
+    id: Mapped[int] = mapped_column(primary_key=True)
+    name: Mapped[str] = mapped_column(String(255))
+
+
+class GenreBook(db.Model):
+    genre_id: Mapped[int] = mapped_column(
+        Integer, ForeignKey(Genre.id), primary_key=True
+    )
+    book_id: Mapped[int] = mapped_column(Integer, ForeignKey(Book.id), primary_key=True)
+    
+    book = relationship(Book, uselist=False, backref="genres")
+    genre = relationship(Genre, uselist=False, backref="books")
 
 class AuthorBook(db.Model):
     author_id: Mapped[int] = mapped_column(
