@@ -6,14 +6,15 @@ from flask_login import current_user
 api = Blueprint("api", __name__)
 
 
-@api.route("/post", methods=['POST'])
+
+@api.route("/post", methods=["POST"])
 def post():
 
     if not request:
         return jsonify(""), 400
-    
-    text = request.form.get('text')
-    image = request.form.get('image_url')
+
+    text = request.form.get("text")
+    image = request.form.get("image_url")
 
     if text is None and image is None:
         return jsonify(""), 400
@@ -74,8 +75,8 @@ def add_to_fav():
 
     if not request:
         return jsonify(""), 400
-    
-    book_id = request.form.get('book_id')
+
+    book_id = request.form.get("book_id")
 
     if book_id is None:
         return jsonify(""), 400
