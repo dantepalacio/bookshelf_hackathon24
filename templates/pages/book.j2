@@ -6,7 +6,62 @@
 {% block content %}
 {% include "components/header.j2" %}
 
-<h1 class="book__name">{{ book.name }}</h1>
-<p>{{ book.views }}</p>
+<div class="book-page">
+    <aside>
+        <img src="{{ book.book_cover }}" class="book-page__image">
+        <div class="book-page__actions">
+            <a href="#">читать позже</a>
+            <a href="#">читать краткое содержание</a>
+            <a href="#">читать полностью</a>
+        </div>
+    </aside>
+
+    <main>
+        <div style="display: grid; gap: 16px">
+            <h1 class="book-page__name">{{ book.name }}</h1>
+            <p class="book-page__author">{{ book.author }}</p>
+        </div>
+        <p>{{ book.description }}</p>
+    </main>
+</div>
+
+<style>
+    .book-page__image {
+        background-color: #C4C4C4;
+        width: 300px;
+        height: 400px;
+        border-radius: 8px;
+    }
+
+    .book-page main {
+        width: 850px;
+        margin: 0 auto;
+    }
+
+    .book-page {
+        position: relative;
+        padding-left: 100px;
+        display: flex;
+    }
+
+    .book-page__name {
+        font-size: 48px;
+        font-weight: 700;
+        line-height: 58px;
+        margin: 0;
+    }
+
+
+    .book-page__author {
+        color: #575656;
+        margin: 0;
+    }
+
+    .book-page__actions {
+        display: grid;
+        gap: 10px;
+        margin-top: 16px;
+    }
+</style>
 
 {% endblock content %}
