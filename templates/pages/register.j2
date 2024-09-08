@@ -1,0 +1,93 @@
+{% extends "layouts/empty.j2" %}
+
+{% block content %}
+<div class="register__head">
+    {% include "components/header.j2" %}</div>
+<div class="register__container">
+    <form action="{{ url_for('auth.login') }}" method="post" class="register-form">
+        <legend>Регистрация</legend>
+        <label>
+            Имя
+            <input type="text" name="first-name" class="input" placeholder="Алексей">
+        </label>
+        <label>
+            Фамилия
+            <input type="text" name="last-name" class="input" placeholder="Рафаелев">
+        </label>
+        <label>
+            E-mail
+            <input type="text" name="email" class="input" placeholder="sample@mail.com">
+        </label>
+        <label>
+            Пароль
+            <input type="password" name="password" class="input">
+        </label>
+        <button type="submit" class="button">Зарегистрироваться</button>
+        <a href="{{ url_for('auth.login') }}">Войти</a>
+    </form>
+</div>
+
+<style>
+    .register__container {
+        width: 100%;
+        height: 99vh;
+        display: flex;
+        align-items: center;
+    }
+
+    .register__head {
+        position: absolute;
+        width: 100%;
+    }
+
+    .input {
+        font: inherit;
+        background-color: white;
+        border: none;
+        padding: 10px;
+        display: block;
+        border-radius: 8px;
+    }
+
+    .register-form legend {
+        font-size: 36px;
+        font-weight: 400;
+        line-height: 44px;
+        text-align: center;
+    }
+
+    .register-form {
+        display: grid;
+        gap: 20px;
+        background-color: #eee;
+        width: 400px;
+        margin: 0 auto;
+        padding: 30px;
+        border-radius: 8px;
+    }
+
+    .register-form a {
+        display: block;
+        text-align: center;
+    }
+
+    .register-form label {
+        display: grid;
+        gap: 10px
+    }
+
+    .button {
+        background: #6236ff;
+        border-radius: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 10px;
+        color: white;
+        font: inherit;
+        border: none;
+        margin: 0;
+    }
+</style>
+
+{% endblock content %}
