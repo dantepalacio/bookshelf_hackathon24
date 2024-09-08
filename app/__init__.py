@@ -5,6 +5,7 @@ from flask import Flask, render_template, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, current_user, login_required
 from flask_socketio import SocketIO, emit, join_room
+from flask_migrate import Migrate
 from pathlib import Path
 
 load_dotenv()
@@ -13,7 +14,7 @@ app = Flask(__name__, root_path=str(Path(__file__).parent.parent))
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
 app.secret_key = os.getenv("SECRET_KEY", "").encode()
 db = SQLAlchemy(app)
-
+migrate = Migrate(app, db)
 
 
 login_manager = LoginManager()

@@ -1,10 +1,14 @@
 from datetime import date
 from typing import Literal
 from flask_login import UserMixin
-from sqlalchemy import ForeignKey, Integer, String, DateTime, func
+from sqlalchemy import ForeignKey, Integer, Nullable, String, DateTime, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app import db, app
 from datetime import datetime
+from sqlalchemy import Column
+from sqlalchemy.dialects.postgresql import TSVECTOR
+from sqlalchemy.sql import func
+from sqlalchemy import event
 
 UserRole = Literal["user", "librarian", "moderator", "admin"]
 
@@ -45,7 +49,19 @@ class Book(db.Model):
     publisher: Mapped[str]
     author: Mapped[str]
     views: Mapped[int] = mapped_column(default=0)
-    description: Mapped[str]
+    description: Mapped[str] = mapped_column(String(2048),nullable=True)
+
+    search_vector = Column(TSVECTOR)
+
+    __table_args__ = (
+        db.Index('books_search_vector', 'search_vector', postgresql_using='gin'),
+    )
+
+@event.listens_for(Book, 'before_insert')
+@event.listens_for(Book, 'before_update')
+def update_search_vector(mapper, connection, target):
+    target.search_vector = func.to_tsvector('english', target.name)
+
 
 class Genre(db.Model):
     __tablename__ = "genre"
