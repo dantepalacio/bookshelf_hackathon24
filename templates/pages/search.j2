@@ -1,0 +1,55 @@
+{% from "components/book.j2" import Book %}
+{% from "components/icon.j2" import Icon %}
+
+{% extends "layouts/empty.j2" %}
+
+{% block content %}
+{% include "components/header.j2" %}
+
+
+<div class="search__container">
+    <aside class="search__aside">
+        <h2>Фильтры</h2>
+    </aside>
+    <main class="search__main">
+        <h1>Результаты поиска</h1>
+        <div class="search__books">
+            {% for book in books %}
+            {{ Book(book, class="bookshelf__book") }}
+            {% endfor %}
+        </div>
+    </main>
+</div>
+
+<style>
+    .search__container {
+        display: flex;
+        padding-inline: 100px;
+        gap: 50px
+    }
+
+    .search__aside {
+        padding: 24px;
+        background-color: #eee;
+        width: 300px;
+        border-radius: 8px;
+    }
+
+    .search__aside h2 {
+        margin: 0;
+    }
+
+    .search__main h1 {
+        margin: 0;
+        grid-column: 1 / -1;
+    }
+
+    .search__books {
+        margin-top: 50px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 50px
+    }
+</style>
+{% endblock content %}
