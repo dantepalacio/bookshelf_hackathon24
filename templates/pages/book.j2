@@ -11,7 +11,9 @@
         <img src="{{ book.book_cover }}" class="book-page__image">
         <div class="book-page__actions">
             <button hx-post="#">читать позже</button>
-            <a href="#">читать краткое содержание</a>
+            <button hx-swap="beforeend" hx-get="{{ url_for('books.read', id=book.id) }}" hx-target="body">
+                читать краткое содержание
+            </button>
             {% if not book.is_in_bookshelf %}
             <button hx-post="{{ url_for('api.add_to_shelf', book=book.id) }}" hx-swap="outerHTML">добавить на
                 полку</button>

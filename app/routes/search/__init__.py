@@ -19,6 +19,5 @@ def search():
         return jsonify({"error": "No search query provided"}), 400
 
     results = search_book(query)
-    print(results)
 
     return render_template("pages/search.j2", books=results)

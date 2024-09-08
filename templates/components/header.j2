@@ -1,7 +1,10 @@
 <header>
-    <a href="{{ url_for('index') }}" class="header__logo">
-        КарОУНБ
-    </a>
+    <div class="header__nav">
+        <a href="{{ url_for('index') }}" class="header__logo">
+            КарОУНБ
+        </a>
+        <a href="/quiz">Квиз</a>
+    </div>
 
     {% include "components/search.j2" %}
     <div class="header__user">
@@ -23,6 +26,11 @@
         position: relative;
         padding: 20px 100px;
         height: 92px;
+    }
+
+    .header__nav {
+        display: flex;
+        gap: 1em;
     }
 
     header .search {

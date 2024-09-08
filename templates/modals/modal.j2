@@ -1,0 +1,42 @@
+<div class="modal modal--{{ position if position is defined else 'center' }} {{ class }}" onclose="this.remove()"
+    onclick='{{ "close" | event }}'>
+    <div class="modal__content" onclick="event.stopPropagation()">
+        {% block before_title %}{% endblock %}
+        <h2 class="modal__title">{{ title }}</h2>
+        {% block content %}{% endblock %}
+    </div>
+</div>
+
+<style>
+    .modal {
+        position: fixed;
+        inset: 0;
+        background-color: #86868633;
+        z-index: 10;
+    }
+
+    .modal__title {
+        font-weight: 600;
+        font-size: 20px;
+        margin: 0;
+        margin-bottom: 32px;
+        text-align: center;
+    }
+
+    .modal__content {
+        background-color: #fff;
+        padding: 24px;
+        position: relative;
+    }
+
+    .modal--center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal--center .modal__content {
+        border-radius: 8px;
+        width: 500px;
+    }
+</style>
