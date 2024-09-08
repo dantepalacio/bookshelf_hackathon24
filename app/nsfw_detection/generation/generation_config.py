@@ -19,7 +19,7 @@ def detect_explicit_comment(text:str) -> json:
         text: Текст комментария
     '''
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo-0125",
+        model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": JSON_EXPLICIT_COMMENT_SYSTEM_PROMPT},
             {"role": "user", "content": text}
@@ -35,7 +35,7 @@ def detect_explicit_comment(text:str) -> json:
 def detect_spam_comment(text: str) -> json:
     '''Функция для определения спам сообщения или рекламы в сообщении'''
     response = client.chat.completions.create(
-        model="gpt-3.5-turbo-0125",
+        model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": JSON_SPAM_COMMENT_SYSTEM_PROMPT},
             {"role": "user", "content": text}

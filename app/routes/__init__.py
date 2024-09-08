@@ -5,6 +5,7 @@ from .chat import chat_bp
 from .auth import auth_bp
 from .api import api
 from .search import search_bp
+from .quiz import quiz
 
 def register_routes(app: Flask):
     app.register_blueprint(admin, url_prefix="/admin")
@@ -13,3 +14,4 @@ def register_routes(app: Flask):
     app.register_blueprint(auth_bp)
     app.register_blueprint(api, url_prefix="/api")
     app.register_blueprint(search_bp, url_prefix='/search')
+    app.register_blueprint(quiz, url_prefix='/quiz')

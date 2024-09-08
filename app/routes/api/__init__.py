@@ -11,6 +11,8 @@ from app.models import (
 )
 from flask_login import current_user
 
+from app.nsfw_detection.cv.check import check_post
+
 api = Blueprint("api", __name__)
 
 
@@ -62,7 +64,19 @@ def review():
     if text is None or book_id is None:
         return abort(400)
 
-    new_review = Review(text=text, book_id=book_id, user_id=current_user.id, status=1)
+
+    content = {'text':text, 'image':None,'video':None}
+    detection_result = check_post(content)
+    print(detection_result)
+
+    review_status = detection_result['text'][0]['is_explicit']
+
+    if review_status == 'publish':
+        result_status = 1
+    else:
+        result_status = 2
+
+    new_review = Review(text=text, book_id=book_id, user_id=current_user.id, status=result_status)
 
     db.session.add(new_review)
     db.session.commit()

@@ -22,7 +22,7 @@ def item(id: int):
     )
 
     reviews = (
-        Review.query.filter(Review.book_id == id).order_by(Review.created_at).all()
+        Review.query.filter(and_ (Review.book_id == id, Review.status == 1)).order_by(Review.created_at).all()
     )
 
     return render_template("pages/book.j2", book=book, reviews=reviews)
