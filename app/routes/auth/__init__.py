@@ -1,7 +1,8 @@
-from flask import Blueprint, redirect, render_template, request, jsonify, url_for
-from flask_login import login_user, logout_user, current_user
-from app.models import User
-from werkzeug.security import check_password_hash
+from operator import or_
+from flask import Blueprint, redirect, render_template, request, url_for
+from flask_login import login_required, login_user, logout_user, current_user
+from app.components import Bookshelf
+from app.models import Book, User, UserBookshelf
 
 auth_bp = Blueprint("auth", __name__)
 
@@ -33,6 +34,24 @@ def logout():
         logout_user()
         return redirect(url_for("index"))
     return "", 403
+
+
+@auth_bp.route("/me")
+@login_required
+def me():
+    bookshelf = map(
+        lambda a: a[0],
+        (
+            UserBookshelf.query.with_entities(UserBookshelf.book_id)
+            .filter(UserBookshelf.id == current_user.id)
+            .all()
+        ),
+    )
+    books = Book.query.filter(or_(*(Book.id == id for id in bookshelf))).all()
+    sections = [
+        Bookshelf(books=books, title="Личная полка"),
+    ]
+    return render_template("pages/me.j2", sections=sections)
 
 
 @auth_bp.route("/register", methods=["GET", "POST"])

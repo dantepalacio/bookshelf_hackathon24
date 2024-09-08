@@ -1,5 +1,7 @@
+from flask_login import current_user
+from sqlalchemy import and_
 from app import db
-from app.models import Book, Review
+from app.models import Book, Review, UserBookshelf
 from flask import Blueprint, abort, render_template
 
 books = Blueprint("books", __name__)
@@ -12,6 +14,12 @@ def item(id: int):
         return abort(404)
     Book.query.filter(Book.id == id).update({Book.views: book.views + 1})
     db.session.commit()
+
+    book.is_in_bookshelf = bool(
+        UserBookshelf.query.filter(
+            and_(UserBookshelf.book_id == id, UserBookshelf.id == current_user.id)
+        ).first()
+    )
 
     reviews = (
         Review.query.filter(Review.book_id == id).order_by(Review.created_at).all()
