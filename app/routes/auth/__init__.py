@@ -49,10 +49,8 @@ def me():
             ),
         )
     )
-    if len(bookshelf) > 1:
-        books = Book.query.filter(or_(*(Book.id == id for id in bookshelf))).all()
-    elif len(bookshelf) == 1:
-        books = Book.query.filter(Book.id == bookshelf[0]).all()
+    if len(bookshelf) > 0:
+        books = Book.query.filter(Book.id.in_(bookshelf)).all()
     else:
         books = []
     sections = [
