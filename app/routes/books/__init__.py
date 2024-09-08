@@ -1,5 +1,5 @@
 from flask_login import current_user
-from sqlalchemy import and_
+from sqlalchemy import and_, desc
 from app import db
 from app.models import Book, Review, UserBookshelf
 from flask import Blueprint, abort, render_template
@@ -12,7 +12,7 @@ from app.parser.utils import split_text_overlap, google_search
 
 
 def generate(query, person="Студент"):
-    google_result = google_search(query)
+    google_result = google_search(query + ' читать краткое содержание брифли')
     parse_result = parse_book(google_result)
 
     book_batches = split_text_overlap(
@@ -51,7 +51,7 @@ def item(id: int):
 
     reviews = (
         Review.query.filter(and_(Review.book_id == id, Review.status == 1))
-        .order_by(Review.created_at)
+        .order_by(desc(Review.created_at))
         .all()
     )
 
