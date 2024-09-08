@@ -1,6 +1,14 @@
 from app import app, db
-from flask import Blueprint, render_template, request, jsonify
-from app.models import Post, UserFavBook, UserBookTrade, UserWishList, Comment, Review, UserBookshelf
+from flask import Blueprint, abort, redirect, request, jsonify
+from app.models import (
+    Post,
+    UserFavBook,
+    UserBookTrade,
+    UserWishList,
+    Comment,
+    Review,
+    UserBookshelf,
+)
 from flask_login import current_user
 
 api = Blueprint("api", __name__)
@@ -20,9 +28,8 @@ def post():
 
     new_post = Post(text=text, image=image, user_id=current_user.id)
 
-    with app.app_context():
-        db.session.add(new_post)
-        db.session.commit()
+    db.session.add(new_post)
+    db.session.commit()
 
     return jsonify(""), 200
 
@@ -41,9 +48,8 @@ def comment():
 
     new_comment = Comment(text=text, post_id=post_id, user_id=current_user.id)
 
-    with app.app_context():
-        db.session.add(new_comment)
-        db.session.commit()
+    db.session.add(new_comment)
+    db.session.commit()
 
     return jsonify(""), 200
 
@@ -83,9 +89,8 @@ def add_to_fav():
 
     newfavbook = UserFavBook(id=current_user.id, book_id=int(book_id))
 
-    with app.app_context():
-        db.session.add(newfavbook)
-        db.session.commit()
+    db.session.add(newfavbook)
+    db.session.commit()
 
     return jsonify(""), 200
 
@@ -106,9 +111,8 @@ def rm_from_fav():
     ).one()
 
     if favbook:
-        with app.app_context():
-            db.session.delete(favbook)
-            db.session.commit()
+        db.session.delete(favbook)
+        db.session.commit()
 
     return jsonify(""), 200
 
@@ -132,9 +136,8 @@ def add_to_wish():
 
     newwishbook = UserWishList(id=current_user.id, book_id=int(book_id))
 
-    with app.app_context():
-        db.session.add(newwishbook)
-        db.session.commit()
+    db.session.add(newwishbook)
+    db.session.commit()
 
     return jsonify(""), 200
 
@@ -155,9 +158,8 @@ def rm_from_wish():
     ).one()
 
     if wishbook:
-        with app.app_context():
-            db.session.delete(wishbook)
-            db.session.commit()
+        db.session.delete(wishbook)
+        db.session.commit()
 
     return jsonify(""), 200
 
@@ -181,9 +183,8 @@ def add_to_trade():
 
     newtradebook = UserBookTrade(id=current_user.id, book_id=int(book_id))
 
-    with app.app_context():
-        db.session.add(newtradebook)
-        db.session.commit()
+    db.session.add(newtradebook)
+    db.session.commit()
 
     return jsonify(""), 200
 
@@ -204,35 +205,25 @@ def rm_from_trade():
     ).one()
 
     if tradebook:
-        with app.app_context():
-            db.session.delete(tradebook)
-            db.session.commit()
+        db.session.delete(tradebook)
+        db.session.commit()
 
     return jsonify(""), 200
 
 
 @api.route("/add_to_shelf", methods=["POST"])
 def add_to_shelf():
-
-    if not request:
-        return jsonify(""), 400
-    
-    book_id = request.form.get('book_id')
+    book_id = request.args.get("book")
 
     if book_id is None:
         return jsonify(""), 400
 
-    newbook = UserBookshelf.query.filter(UserBookshelf.id == current_user.id, UserBookshelf.book_id == book_id).one()
-    if newbook:
-        return jsonify(""), 400
+    newbook = UserBookshelf(id=current_user.id, book_id=int(book_id))
 
-    newbook = UserBookshelf(id = current_user.id, book_id = int(book_id))
+    db.session.add(newbook)
+    db.session.commit()
 
-    with app.app_context():
-        db.session.add(newbook)
-        db.session.commit()
-
-    return jsonify(""), 200
+    return "На полке", 200
 
 
 @api.route("/rm_from_shelf", methods=["POST"])
@@ -240,17 +231,18 @@ def rm_from_shelf():
 
     if not request:
         return jsonify(""), 400
-    
-    book_id = request.form.get('book_id')
+
+    book_id = request.form.get("book_id")
 
     if book_id is None:
         return jsonify(""), 400
 
-    newbook = UserBookshelf.query.filter(UserBookshelf.id == current_user.id, UserBookshelf.book_id == book_id).one()
+    newbook = UserBookshelf.query.filter(
+        UserBookshelf.id == current_user.id, UserBookshelf.book_id == book_id
+    ).one()
 
     if newbook:
-        with app.app_context():
-            db.session.delete(newbook)
-            db.session.commit()
+        db.session.delete(newbook)
+        db.session.commit()
 
     return jsonify(""), 200

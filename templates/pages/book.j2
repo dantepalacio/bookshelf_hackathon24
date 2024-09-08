@@ -10,9 +10,14 @@
     <aside>
         <img src="{{ book.book_cover }}" class="book-page__image">
         <div class="book-page__actions">
-            <a href="#">читать позже</a>
+            <button hx-post="#">читать позже</button>
             <a href="#">читать краткое содержание</a>
-            {# <a href="#">читать полностью</a> #}
+            {% if not book.is_in_bookshelf %}
+            <button hx-post="{{ url_for('api.add_to_shelf', book=book.id) }}" hx-swap="outerHTML">добавить на
+                полку</button>
+            {% else %}
+            на полке
+            {% endif %}
         </div>
     </aside>
 
@@ -167,6 +172,18 @@
         display: grid;
         gap: 10px;
         margin-top: 16px;
+    }
+
+    .book-page__actions button {
+        font: inherit;
+        text-align: left;
+        background-color: transparent;
+        border: none;
+        padding: 0;
+        margin: 0;
+        color: #0066cc;
+        text-decoration: underline;
+        cursor: pointer;
     }
 </style>
 
