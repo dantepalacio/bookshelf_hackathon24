@@ -14,6 +14,7 @@ def index():
         year = request.form.get("year")
         publisher = request.form.get("publisher")
         book_cover = request.form.get("book_cover")
+        description = request.form.get("description")
 
         book = Book(
             name=book_title,  # type: ignore
@@ -21,8 +22,9 @@ def index():
             year=year,  # type: ignore
             book_cover=book_cover,  # type: ignore
             publisher=publisher,  # type: ignore
-            author=author,# type: ignore
-        )  
+            author=author,  # type: ignore
+            description=description,  # type: ignore
+        )
 
         db.session.add(book)
         db.session.commit()
