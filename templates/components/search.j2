@@ -5,7 +5,7 @@
     /** @type {HTMLInputElement} */
     const element = this
     if (event.key.toLowerCase() === "enter") {
-        const url = element.getAttribute("hx-get")
+        const url = element.getAttribute("data-get")
         const { value, name } = element
         const params = new URLSearchParams({
             [name]: value
@@ -20,11 +20,9 @@
         {{ Icon("search", 32, 32, class="search__icon") }}
         {% set query = request.args.get('q') %}
 
-        <input type="text" class="search__input" placeholder="Поиск" name="q" hx-get="{{ url_for('search.search') }}"
-            hx-target="#search-result" {% if query %} value="{{ query | e }}" {% endif %}
-            onkeyup='{{ on_enter() | script }}'>
+        <input type="text" class="search__input" placeholder="Поиск" name="q" data-get="{{ url_for('search.search') }}"
+            {% if query %} value="{{ query | e }}" {% endif %} onkeyup='{{ on_enter() | script }}'>
     </label>
-    <div id="search-result"></div>
 </div>
 
 <style>
