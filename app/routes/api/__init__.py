@@ -1,6 +1,6 @@
 from app import app, db
 from flask import Blueprint, render_template, request, jsonify
-from app.models import Post, UserFavBook, UserBookTrade, UserWishList, Comment, Review
+from app.models import Post, UserFavBook, UserBookTrade, UserWishList, Comment, Review, UserBookshelf
 from flask_login import current_user
 
 api = Blueprint("api", __name__)
@@ -200,6 +200,51 @@ def rm_from_trade():
     if tradebook:
         with app.app_context():
             db.session.delete(tradebook)
+            db.session.commit()
+
+    return jsonify(""), 200
+
+
+@api.route("/add_to_shelf", methods=["POST"])
+def add_to_trade():
+
+    if not request:
+        return jsonify(""), 400
+    
+    book_id = request.form.get('book_id')
+
+    if book_id is None:
+        return jsonify(""), 400
+
+    newbook = UserBookshelf.query.filter(UserBookshelf.id == current_user.id, UserBookshelf.book_id == book_id).one()
+    if newbook:
+        return jsonify(""), 400
+
+    newbook = UserBookshelf(id = current_user.id, book_id = int(book_id))
+
+    with app.app_context():
+        db.session.add(newbook)
+        db.session.commit()
+
+    return jsonify(""), 200
+
+
+@api.route("/rm_from_shelf", methods=["POST"])
+def rm_from_trade():
+
+    if not request:
+        return jsonify(""), 400
+    
+    book_id = request.form.get('book_id')
+
+    if book_id is None:
+        return jsonify(""), 400
+
+    newbook = UserBookshelf.query.filter(UserBookshelf.id == current_user.id, UserBookshelf.book_id == book_id).one()
+
+    if newbook:
+        with app.app_context():
+            db.session.delete(newbook)
             db.session.commit()
 
     return jsonify(""), 200
