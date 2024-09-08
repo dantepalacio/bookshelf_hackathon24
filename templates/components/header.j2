@@ -6,7 +6,7 @@
     {% include "components/search.j2" %}
     <div class="header__user">
         {% if current_user.is_authenticated %}
-        {{ current_user.first_name }}
+        <a href="{{ url_for('auth.me') }}">{{ current_user.first_name }}</a>
         <a href="{{ url_for('auth.logout') }}">Выйти</a>
         {% else %}
         <a href="{{ url_for('auth.login') }}">Войти</a>
