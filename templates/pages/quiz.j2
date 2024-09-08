@@ -1,0 +1,176 @@
+<html>
+
+</html>
+
+<head>
+    <title>
+        Библиотека им. Гоголя
+    </title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: white;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .header h1 {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input {
+            padding: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .search-bar i {
+            margin-left: 10px;
+            color: #888;
+        }
+
+        .content {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .profile {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile div {
+            text-align: center;
+        }
+
+        .profile img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+        }
+
+        .vs {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 0 20px;
+        }
+
+        .timer {
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .book-title {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .question {
+            background-color: #e0e0e0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .question p {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .answer-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .profile img {
+            object-fit: cover;
+        }
+
+        .answer-box textarea {
+            width: 80%;
+            height: 150px;
+            padding: 10px;
+            border: 2px solid #000;
+            border-radius: 10px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .answer-box button {
+            padding: 10px 20px;
+            background-color: #888;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    {% include 'components/header.j2' %}
+    <div class="content">
+        <div class="profile">
+            <div>
+                <img alt="Profile picture of Kurban Khadzhi" height="80"
+                    src="https://nb-bet.com/Images/tennis/95/15743745755391.png" width="80" />
+                <p>
+                    Курбан Хаджи<br>2923 elo
+                </p>
+            </div>
+            <div class="vs">
+                VS
+            </div>
+            <div>
+                <img alt="Profile picture of Shorkhat Islamov" height="80"
+                    src="https://forums.lokamc.com/data/avatars/l/3/3111.jpg?1717159011" width="80" />
+                <p>
+                    Шорхат Исламов<br>2920 elo
+                </p>
+            </div>
+        </div>
+        <div class="timer">
+            0:34
+        </div>
+        <div class="book-title">
+            Книга: Война и мир
+        </div>
+        <div class="question">
+            <p>
+                1/5
+            </p>
+            <p>
+                Какую роль играло Бородинское сражение в развитии сюжета романа "Война и мир", и как оно повлияло на
+                судьбы главных героев?
+            </p>
+        </div>
+        <div class="answer-box">
+            <textarea placeholder="Введите ваш ответ"></textarea>
+            <button>
+                Отправить ответ
+            </button>
+        </div>
+    </div>
+</body>
+
+</html>
