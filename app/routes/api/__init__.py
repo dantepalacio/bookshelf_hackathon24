@@ -212,7 +212,7 @@ def rm_from_trade():
 
 
 @api.route("/add_to_shelf", methods=["POST"])
-def add_to_trade():
+def add_to_shelf():
 
     if not request:
         return jsonify(""), 400
@@ -236,7 +236,7 @@ def add_to_trade():
 
 
 @api.route("/rm_from_shelf", methods=["POST"])
-def rm_from_trade():
+def rm_from_shelf():
 
     if not request:
         return jsonify(""), 400
