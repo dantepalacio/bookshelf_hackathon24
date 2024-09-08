@@ -39,15 +39,22 @@ def logout():
 @auth_bp.route("/me")
 @login_required
 def me():
-    bookshelf = map(
-        lambda a: a[0],
-        (
-            UserBookshelf.query.with_entities(UserBookshelf.book_id)
-            .filter(UserBookshelf.id == current_user.id)
-            .all()
-        ),
+    bookshelf = list(
+        map(
+            lambda a: a[0],
+            (
+                UserBookshelf.query.with_entities(UserBookshelf.book_id)
+                .filter(UserBookshelf.id == current_user.id)
+                .all()
+            ),
+        )
     )
-    books = Book.query.filter(or_(*(Book.id == id for id in bookshelf))).all()
+    if len(bookshelf) > 1:
+        books = Book.query.filter(or_(*(Book.id == id for id in bookshelf))).all()
+    elif len(bookshelf) == 1:
+        books = Book.query.filter(Book.id == bookshelf[0]).all()
+    else:
+        books = []
     sections = [
         Bookshelf(books=books, title="Личная полка"),
     ]
